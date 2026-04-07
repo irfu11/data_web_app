@@ -1,0 +1,15 @@
+[server]
+headless = true
+enableXsrfProtection = false
+enableCORS = false
+port = 10000
+
+[client]
+showErrorDetails = false
+toolbarMode = "viewer"
+
+[logger]
+level = "error"
+
+[browser]
+gatherUsageStats = false

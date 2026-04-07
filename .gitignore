@@ -119,7 +119,8 @@ dmypy.json
 .pyre/
 
 # Streamlit specific
-.streamlit/
+.streamlit/secrets.toml
+.streamlit/cache/
 *.streamlit.app
 .vscode/
 .idea/
