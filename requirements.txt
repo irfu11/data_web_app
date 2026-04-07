@@ -1,0 +1,10 @@
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+seaborn>=0.12
+scipy>=1.10
+openpyxl>=3.1
+
+# Groq AI — no pip package needed!
+# The client uses only Python stdlib (urllib, json, threading).
+# Get your FREE API key at: console.groq.com  (no credit card)
