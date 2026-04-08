@@ -23,7 +23,7 @@ import os
 
 from utils.theme import (
     BG, PANEL, CARD, ACCENT, ACCENT2, ACCENT3,
-    SUBTEXT, BORDER, ERROR, SUCCESS, TEXT
+    SUBTEXT, BORDER, ERROR, SUCCESS, TEXT, BG_ACCENT, BG_ACCENT2, BG_ACCENT3
 )
 from utils.widgets import make_button, style_treeview
 from tabs.overview     import OverviewTab
@@ -60,24 +60,25 @@ class DataLensApp(tk.Tk):
         s = ttk.Style(self)
         s.theme_use("clam")
 
+        # Modern light theme styling
         s.configure("TNotebook",
                     background=BG, borderwidth=0, tabmargins=[0, 0, 0, 0])
         s.configure("TNotebook.Tab",
-                    background=PANEL, foreground=SUBTEXT,
-                    padding=[20, 10],
-                    font=("Courier New", 10, "bold"), borderwidth=0)
+                    background=CARD, foreground=SUBTEXT,
+                    padding=[24, 12],
+                    font=("Segoe UI", 10, "bold"), borderwidth=0)
         s.map("TNotebook.Tab",
               background=[("selected", ACCENT)],
-              foreground=[("selected", TEXT)])
+              foreground=[("selected", "#FFFFFF")])
 
         s.configure("TScrollbar",
-                    background=PANEL, troughcolor=BG, arrowcolor=SUBTEXT)
+                    background=BORDER, troughcolor=BG, arrowcolor=SUBTEXT)
         s.configure("Vertical.TScrollbar",
-                    background=PANEL, troughcolor=BG, arrowcolor=SUBTEXT)
+                    background=BORDER, troughcolor=BG, arrowcolor=SUBTEXT)
         s.configure("TCombobox",
                     fieldbackground=CARD, background=CARD,
                     foreground=TEXT, selectbackground=ACCENT,
-                    bordercolor=BORDER)
+                    bordercolor=BORDER, padding=6)
 
         style_treeview(s)
 
@@ -85,39 +86,49 @@ class DataLensApp(tk.Tk):
     #  HEADER
     # ══════════════════════════════════════════════════════════════
     def _build_header(self):
-        hdr = tk.Frame(self, bg=PANEL, height=64)
+        hdr = tk.Frame(self, bg=PANEL, height=72)
         hdr.pack(fill="x", side="top")
         hdr.pack_propagate(False)
 
-        # logo
-        tk.Label(
-            hdr, text="◈ DataLens",
-            font=("Courier New", 18, "bold"),
+        # Left section
+        left = tk.Frame(hdr, bg=PANEL)
+        left.pack(side="left", fill="both", expand=True, padx=24, pady=14)
+
+        # Logo with gradient color
+        logo = tk.Label(
+            left, text="◈ DataLens",
+            font=("Segoe UI", 22, "bold"),
             bg=PANEL, fg=ACCENT
-        ).pack(side="left", padx=24, pady=14)
+        )
+        logo.pack(side="left")
 
-        # subtitle
+        # Subtitle
         tk.Label(
-            hdr, text="Analytics Dashboard  ·  GROQ AI ",
-            font=("Courier New", 11),
+            left, text="Advanced Analytics Dashboard",
+            font=("Segoe UI", 10),
             bg=PANEL, fg=SUBTEXT
-        ).pack(side="left")
+        ).pack(side="left", padx=(14, 0))
 
-        # loaded file name (right side)
-        tk.Label(
-            hdr, textvariable=self.file_path,
-            font=("Courier New", 9),
-            bg=PANEL, fg=ACCENT3, anchor="e"
-        ).pack(side="right", padx=20)
+        # Right section
+        right = tk.Frame(hdr, bg=PANEL)
+        right.pack(side="right", fill="both", padx=24, pady=12)
 
-        # load button
+        # Load button with modern styling
         tk.Button(
-            hdr, text="⬆  Load Dataset",
-            font=("Courier New", 10), bg=ACCENT, fg=TEXT,
-            relief="flat", cursor="hand2", padx=14, pady=6,
-            activebackground=ACCENT2, activeforeground=TEXT,
+            right, text="⬆  Load Dataset",
+            font=("Segoe UI", 10, "bold"), bg=ACCENT, fg="#FFFFFF",
+            relief="flat", cursor="hand2", padx=18, pady=8,
+            activebackground=ACCENT2, activeforeground="#FFFFFF",
+            highlightthickness=0, bd=0,
             command=self._load_file
-        ).pack(side="right", padx=(0, 12), pady=12)
+        ).pack(side="right", padx=(0, 12))
+
+        # File name display
+        tk.Label(
+            right, textvariable=self.file_path,
+            font=("Segoe UI", 9),
+            bg=PANEL, fg=ACCENT, anchor="e"
+        ).pack(side="right", padx=(0, 12))
 
     # ══════════════════════════════════════════════════════════════
     #  NOTEBOOK TABS
@@ -149,15 +160,15 @@ class DataLensApp(tk.Tk):
         self.status_var = tk.StringVar(
             value="Ready — load a CSV, Excel, JSON, or TSV file to begin.")
 
-        bar = tk.Frame(self, bg=PANEL, height=28)
+        bar = tk.Frame(self, bg=CARD, height=36)
         bar.pack(fill="x", side="bottom")
         bar.pack_propagate(False)
 
         tk.Label(
             bar, textvariable=self.status_var,
-            font=("Courier New", 9),
-            bg=PANEL, fg=SUBTEXT, anchor="w"
-        ).pack(side="left", padx=14)
+            font=("Segoe UI", 9),
+            bg=CARD, fg=SUBTEXT, anchor="w"
+        ).pack(side="left", padx=18, pady=6)
 
     def set_status(self, msg: str):
         """Update the bottom status bar text from any tab."""

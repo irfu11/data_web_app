@@ -5,6 +5,7 @@ matplotlib>=3.7
 seaborn>=0.12
 scipy>=1.10
 openpyxl>=3.1
+Pillow>=10.0
 
 # Groq AI — no pip package needed!
 # The client uses only Python stdlib (urllib, json, threading).
